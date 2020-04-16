@@ -25,4 +25,27 @@ function calculate() {
     else {
         errorDiv.innerHTML = "";
     }
+
+    // Vypocet hypoteky
+    const mesacnyUrok = RPMN / 12 / 100;
+    const pocetMesiacovSplacania = dobaSplatnosti * 12;
+    const discountFactor = getDiscountFcator(mesacnyUrok, pocetMesiacovSplacania);
+    const vyskaSplatky = vyskaHypo / discountFactor;
+
+    let zaplatenyUrok = 0;
+    let vyskaNaZaciatkuMesiaca = vyskaHypo;
+    for (let i = 1; i <= pocetMesiacovSplacania; i++) {
+        const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
+        const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
+        zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
+        console.log(`${i}\t| ${vyskaNaZaciatkuMesiaca.toFixed(2)}\t| ${vyskaSplatenehoUroku.toFixed(2)}\t| ${vyskaSplatenejIstiny.toFixed(2)}\t| ${zaplatenyUrok.toFixed(2)}`);
+        vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
+    }
+
+    console.log(`Zaplateny urok ${zaplatenyUrok}`);
+}
+
+function getDiscountFcator(mesacnyUrok, pocetMesiacovSplacania){
+    // discount factor ({[(1+.005)^360] - 1} / [.005(1+.005)^360])
+    return ((Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania) - 1) / (mesacnyUrok * Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania)));
 }
