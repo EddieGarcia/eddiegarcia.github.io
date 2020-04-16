@@ -38,7 +38,10 @@
     <div id="error" style="color: red"></div>
     <button onclick="calculate()">Vypocitaj</button>
 
-    <div id="result"></div>
+    <div id="result">
+        <div id="table"></div>
+        <div id="urok"></div>
+    </div>
 
     <script>
         function calculate() {
@@ -71,24 +74,49 @@
         
             // Vypocet hypoteky
             const mesacnyUrokObd1 = obd1Urok / 12 / 100;
-            const pocetMesiacov = dobaSplatnosti * 12;
+            const pocetMesiacovObd1 = dobaSplatnosti * 12;
+
+            const mesacnyUrokObd2 = obd2Urok / 12 / 100;
+            const pocetMesiacovObd2 = (obd2Poc + obd3Poc) * 12;
+
+            const mesacnyUrokObd3 = obd3Urok / 12 / 100;
+            const pocetMesiacovObd3 = obd3Poc * 12;
             
-            
-            
-            const discountFactor = getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania);
-            const vyskaSplatky = vyskaHypo / discountFactor;
         
             let zaplatenyUrok = 0;
             let vyskaNaZaciatkuMesiaca = vyskaHypo;
+            let discountFactor = getDiscountFactor(mesacnyUrokObd1, pocetMesiacovObd1);
+            let vyskaSplatky = vyskaHypo / discountFactor;
+            let farba = 'red'
+            let tabulka = '';
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
+                // Prepocitanie splatky 
+                if (i === obd1Poc * 12 + 1) {
+                    discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
+                    vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
+                    farba = 'blue';
+                }
+                else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
+                    discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
+                    vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
+                    farba = 'green';
+                }
+
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
                 const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
                 zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
-                console.log(`${i}\t| ${vyskaNaZaciatkuMesiaca.toFixed(2)}\t| ${vyskaSplatenehoUroku.toFixed(2)}\t| ${vyskaSplatenejIstiny.toFixed(2)}\t| ${zaplatenyUrok.toFixed(2)}`);
+                 tabulka += `<tr style='backgroundcolor: ${farba}'><td>${i}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
         
-            console.log(`Zaplateny urok ${zaplatenyUrok}`);
+            document.getElementById("table").innerHTML = `<table><tr>
+                <th>Mesiac</th>
+                <th>Vyska na zac mesiaca</th>
+                <th>Vyska splateneho uroku</th>
+                <th>Vyska splatenej istiny</th>
+                <th>Zaplateny urok</th>
+            </tr> ${tabulka}</table>`;
+            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok}</h2>`;
         }
         
         function getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania){
