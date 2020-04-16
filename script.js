@@ -1,0 +1,3 @@
+function vypocitaj() {
+    alert('hello');
+}
