@@ -89,7 +89,7 @@
             let discountFactor = getDiscountFactor(mesacnyUrokObd1, pocetMesiacovObd1);
             let mesacnyUrok = mesacnyUrokObd1;
             let vyskaSplatky = vyskaHypo / discountFactor;
-            let farba = 'red'
+            let farba = '#ffcbc7'
             let tabulka = '';
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
                 // Prepocitanie splatky 
@@ -97,22 +97,23 @@
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     let mesacnyUrok = mesacnyUrokObd2;
-                    farba = 'blue';
+                    farba = '#ffcbc7';
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
                     let mesacnyUrok = mesacnyUrokObd3;
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
-                    farba = 'green';
+                    farba = '#d8ffd6';
                 }
 
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
                 const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
                 zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
-                 tabulka += `<tr style='backgroundcolor: ${farba}'><td>${i}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
+                 tabulka += `<tr style='background-color: ${farba}'><td>${i}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
         
+            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok}</h2>`;
             document.getElementById("table").innerHTML = `<table><tr>
                 <th>Mesiac</th>
                 <th>Vyska na zac mesiaca</th>
@@ -120,7 +121,6 @@
                 <th>Vyska splatenej istiny</th>
                 <th>Zaplateny urok</th>
             </tr> ${tabulka}</table>`;
-            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok}</h2>`;
         }
         
         function getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania){
