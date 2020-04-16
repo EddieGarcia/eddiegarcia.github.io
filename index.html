@@ -101,21 +101,22 @@
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
-                    let mesacnyUrok = mesacnyUrokObd3;
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
+                    let mesacnyUrok = mesacnyUrokObd3;
                     farba = '#d8ffd6';
                 }
 
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
                 const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
                 zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
-                 tabulka += `<tr style='background-color: ${farba}'><td>${i}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
+                 tabulka += `<tr style='background-color: ${farba}'><td>${i} (${Math.ceil(i/12)})</td><td>${vyskaSplatky.toFixed(2)}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
         
             document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok.toFixed(2)}</h2>`;
             document.getElementById("table").innerHTML = `<table><tr>
                 <th>Mesiac</th>
+                <th>Vyska splatky</th>
                 <th>Vyska na zac mesiaca</th>
                 <th>Vyska splateneho uroku</th>
                 <th>Vyska splatenej istiny</th>
