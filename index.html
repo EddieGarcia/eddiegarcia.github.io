@@ -97,14 +97,14 @@
                 if (i === obd1Poc * 12 + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
-                    let mesacnyUrok = mesacnyUrokObd2;
+                    mesacnyUrok = mesacnyUrokObd2;
                     farba = '#bcd3f7';
                     console.log(`Discount factor 2: ${discountFactor}`);
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
-                    let mesacnyUrok = mesacnyUrokObd3;
+                    mesacnyUrok = mesacnyUrokObd3;
                     farba = '#d8ffd6';
                     console.log(`Discount factor 3: ${discountFactor}`);
                 }
