@@ -27,9 +27,12 @@ function calculate() {
     }
 
     // Vypocet hypoteky
-    const mesacnyUrok = RPMN / 12 / 100;
-    const pocetMesiacovSplacania = dobaSplatnosti * 12;
-    const discountFactor = getDiscountFcator(mesacnyUrok, pocetMesiacovSplacania);
+    const mesacnyUrokObd1 = obd1Urok / 12 / 100;
+    const pocetMesiacov = dobaSplatnosti * 12;
+    
+    
+    
+    const discountFactor = getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania);
     const vyskaSplatky = vyskaHypo / discountFactor;
 
     let zaplatenyUrok = 0;
@@ -45,7 +48,7 @@ function calculate() {
     console.log(`Zaplateny urok ${zaplatenyUrok}`);
 }
 
-function getDiscountFcator(mesacnyUrok, pocetMesiacovSplacania){
+function getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania){
     // discount factor ({[(1+.005)^360] - 1} / [.005(1+.005)^360])
     return ((Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania) - 1) / (mesacnyUrok * Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania)));
 }
