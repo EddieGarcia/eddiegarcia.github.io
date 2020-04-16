@@ -91,6 +91,7 @@
             let vyskaSplatky = vyskaHypo / discountFactor;
             let farba = '#ffcbc7'
             let tabulka = '';
+            console.log(`Discount factor 1: ${discountFactor}`);
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
                 // Prepocitanie splatky 
                 if (i === obd1Poc * 12 + 1) {
@@ -98,12 +99,14 @@
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     let mesacnyUrok = mesacnyUrokObd2;
                     farba = '#bcd3f7';
+                    console.log(`Discount factor 2: ${discountFactor}`);
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     let mesacnyUrok = mesacnyUrokObd3;
                     farba = '#d8ffd6';
+                    console.log(`Discount factor 3: ${discountFactor}`);
                 }
 
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
