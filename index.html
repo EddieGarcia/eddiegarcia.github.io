@@ -87,6 +87,7 @@
             let zaplatenyUrok = 0;
             let vyskaNaZaciatkuMesiaca = vyskaHypo;
             let discountFactor = getDiscountFactor(mesacnyUrokObd1, pocetMesiacovObd1);
+            let mesacnyUrok = mesacnyUrokObd1;
             let vyskaSplatky = vyskaHypo / discountFactor;
             let farba = 'red'
             let tabulka = '';
@@ -95,10 +96,12 @@
                 if (i === obd1Poc * 12 + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
+                    let mesacnyUrok = mesacnyUrokObd2;
                     farba = 'blue';
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
+                    let mesacnyUrok = mesacnyUrokObd3;
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     farba = 'green';
                 }
