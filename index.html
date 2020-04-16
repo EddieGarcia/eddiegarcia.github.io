@@ -38,8 +38,8 @@
     <div id="error" style="color: red"></div>
     <button onclick="calculate()">Vypocitaj</button>
 
-    <div id="table"></div>
     <div id="urok"></div>
+    <div id="table"></div>
 
     <script>
         function calculate() {
@@ -113,7 +113,7 @@
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
         
-            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok}</h2>`;
+            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok.toFixed(2)}</h2>`;
             document.getElementById("table").innerHTML = `<table><tr>
                 <th>Mesiac</th>
                 <th>Vyska na zac mesiaca</th>
