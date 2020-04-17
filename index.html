@@ -106,7 +106,7 @@
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
                 // Prepocitanie splatky 
                 if (i === obd1Poc * 12 + 1) {
-                    obd1result.innerHTML = `Splatka za obdobie 1: ${vyskaSplatky}, celkovy splateny urok na konci obdobia 1: ${zaplatenyUrok}`;
+                    obd1result.innerHTML = `Splatka za obdobie 1: ${vyskaSplatky.toFixed(2)}, celkovy splateny urok na konci obdobia 1: ${zaplatenyUrok.toFixed(2)}`;
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     mesacnyUrok = mesacnyUrokObd2;
@@ -114,7 +114,7 @@
                     console.log(`Discount factor 2: ${discountFactor}`);
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
-                    obd2result.innerHTML = `Splatka za obdobie 2: ${vyskaSplatky}, celkovy splateny urok na konci obdobia 2: ${zaplatenyUrok}`;
+                    obd2result.innerHTML = `Splatka za obdobie 2: ${vyskaSplatky.toFixed(2)}, celkovy splateny urok na konci obdobia 2: ${zaplatenyUrok.toFixed(2)}`;
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     mesacnyUrok = mesacnyUrokObd3;
@@ -125,18 +125,21 @@
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
                 const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
                 zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
-                tabulka += `<tr style='background-color: ${farba}'><td>${i} (${Math.ceil(i/12)})</td><td>${vyskaSplatky.toFixed(2)}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
+                tabulka += `<tr style='background-color: ${farba}'><td title='Mesiac (rok)'>${i} (${Math.ceil(i/12)})</td><td title='Vyska splatky'>${vyskaSplatky.toFixed(2)}</td><td title='Vyska nesplatenej istiny na zac mesiaca'>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td title='Vyska splateneho uroku'>${vyskaSplatenehoUroku.toFixed(2)}</td><td title='Vyska splatenej istiny'>${vyskaSplatenejIstiny.toFixed(2)}</td><td title='Zaplateny urok kumulativny'>${zaplatenyUrok.toFixed(2)}</td></tr>`;
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
+            if (obd3Poc) {
+                obd3result.innerHTML = `Splatka za obdobie 3: ${vyskaSplatky.toFixed(2)}, celkovy splateny urok na konci obdobia 3: ${zaplatenyUrok.toFixed(2)}`;
+            }
 
-            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok.toFixed(2)}</h2>`;
+            document.getElementById("urok").innerHTML = `<h2>Zaplateny urok celkom: ${zaplatenyUrok.toFixed(2)}</h2>`;
             document.getElementById("table").innerHTML = `<table><tr>
-                <th>Mesiac</th>
+                <th>Mesiac (rok)</th>
                 <th>Vyska splatky</th>
-                <th>Vyska na zac mesiaca</th>
+                <th>Vyska nesplatenej istiny na zac mesiaca</th>
                 <th>Vyska splateneho uroku</th>
                 <th>Vyska splatenej istiny</th>
-                <th>Zaplateny urok</th>
+                <th>Zaplateny urok kumulativny</th>
             </tr> ${tabulka}</table>`;
         }
         
