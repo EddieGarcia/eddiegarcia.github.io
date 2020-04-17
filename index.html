@@ -21,18 +21,21 @@
         <input type="text" id="obd1Poc" name="obd1Poc"><br>
         <label for="obd1Urok">Urok:</label><br>
         <input type="text" id="obd1Urok" name="obd1Urok"><br>
+        <div id="obd1res" style="color: red"></div><br>
 
         <label for="obd2Poc">------ Obdobie 2 ------</label><br>
         <label for="obd2Poc">Pocet rokov:</label><br>
         <input type="text" id="obd2Poc" name="obd2Poc"><br>
         <label for="obd1Urok">Urok:</label><br>
         <input type="text" id="obd2Urok" name="obd2Urok"><br>
+        <div id="obd2res" style="color: blue"></div><br>
 
         <label for="obd3Poc">------ Obdobie 3 ------</label><br>
         <label for="obd3Poc">Pocet rokov:</label><br>
         <input type="text" id="obd3Poc" name="obd3Poc"><br>
         <label for="obd3Urok">Urok:</label><br>
         <input type="text" id="obd3Urok" name="obd3Urok"><br>
+        <div id="obd3res" style="color: green"></div><br >
     </form>
 
     <div id="error" style="color: red"></div>
@@ -58,14 +61,22 @@
             const errorDiv = document.getElementById("error");
             const tableDiv = document.getElementById("table");
             const urokDiv = document.getElementById("urok");
+
+            const obd1result = document.getElementById("obd1res");
+            const obd2result = document.getElementById("obd2res");
+            const obd3result = document.getElementById("obd3res");
+
             tableDiv.innerHTML = "";
             urokDiv.innerHTML = "";
+            obd1result.innerHTML = "";
+            obd2result.innerHTML = "";
+            obd3result.innerHTML = "";
             if (!dobaSplatnosti || !vyskaHypo || !obd1Poc || !obd1Urok) {
-                errorDiv.innerHTML = "Polia doba splatnosti, vyska hypo a 1. obdobie musia byt vyplnene"
+                errorDiv.innerHTML = "Polia doba splatnosti, vyska hypo a 1. obdobie musia byt vyplnene";
                 return;
             }
             else if (obd1Poc + obd2Poc + obd3Poc !== dobaSplatnosti) {
-                errorDiv.innerHTML = "Sucet obdobi sa musi rovnat dobe splatnosti"
+                errorDiv.innerHTML = "Sucet obdobi sa musi rovnat dobe splatnosti";
                 return;
             }
             else {
@@ -95,6 +106,7 @@
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
                 // Prepocitanie splatky 
                 if (i === obd1Poc * 12 + 1) {
+                    obd1result.innerHTML = `Splatka za obdobie 1: ${vyskaSplatky}, celkovy splateny urok na konci obdobia 1: ${zaplatenyUrok}`;
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     mesacnyUrok = mesacnyUrokObd2;
@@ -102,6 +114,7 @@
                     console.log(`Discount factor 2: ${discountFactor}`);
                 }
                 else if (i === ((obd1Poc + obd2Poc) * 12) + 1) {
+                    obd2result.innerHTML = `Splatka za obdobie 2: ${vyskaSplatky}, celkovy splateny urok na konci obdobia 2: ${zaplatenyUrok}`;
                     discountFactor = getDiscountFactor(mesacnyUrokObd3, pocetMesiacovObd3);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     mesacnyUrok = mesacnyUrokObd3;
@@ -112,10 +125,10 @@
                 const vyskaSplatenehoUroku = vyskaNaZaciatkuMesiaca * mesacnyUrok;
                 const vyskaSplatenejIstiny = vyskaSplatky - vyskaSplatenehoUroku;
                 zaplatenyUrok = zaplatenyUrok + vyskaSplatenehoUroku;
-                 tabulka += `<tr style='background-color: ${farba}'><td>${i} (${Math.ceil(i/12)})</td><td>${vyskaSplatky.toFixed(2)}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
+                tabulka += `<tr style='background-color: ${farba}'><td>${i} (${Math.ceil(i/12)})</td><td>${vyskaSplatky.toFixed(2)}</td><td>${vyskaNaZaciatkuMesiaca.toFixed(2)}</td><td>${vyskaSplatenehoUroku.toFixed(2)}</td><td>${vyskaSplatenejIstiny.toFixed(2)}</td><td>${zaplatenyUrok.toFixed(2)}</td></tr>`;
                 vyskaNaZaciatkuMesiaca = vyskaNaZaciatkuMesiaca - vyskaSplatenejIstiny;
             }
-        
+
             document.getElementById("urok").innerHTML = `<h2>Zaplateny urok ${zaplatenyUrok.toFixed(2)}</h2>`;
             document.getElementById("table").innerHTML = `<table><tr>
                 <th>Mesiac</th>
