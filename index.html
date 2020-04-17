@@ -15,7 +15,7 @@
         <input type="text" id="vyskaHypo" name="vyskaHypo"><br>
         <label for="dobaSplacania">Doba splacania:</label><br>
         <input type="text" id="dobaSplacania" name="dobaSplacania">
-        <h3>Uroky v obdobiach - <i>!!! Desatinne cisla zadavat pomocou bodky . !!!</i></h3>
+        <h3>Uroky v obdobiach</h3>
         <label for="obd1Poc">------ Obdobie 1 ------</label><br>
         <label for="obd1Poc">Pocet rokov:</label><br>
         <input type="text" id="obd1Poc" name="obd1Poc"><br>
@@ -43,17 +43,17 @@
 
     <script>
         function calculate() {
-            const dobaSplatnosti = parseFloat(document.getElementById('dobaSplacania').value);
-            const vyskaHypo = parseFloat(document.getElementById('vyskaHypo').value);
+            const dobaSplatnosti = getFloatFromFormInput('dobaSplacania');
+            const vyskaHypo = getFloatFromFormInput('vyskaHypo');
         
-            const obd1Poc = parseFloat(document.getElementById('obd1Poc').value) || 0;
-            const obd1Urok = parseFloat(document.getElementById('obd1Urok').value) || 0;
+            const obd1Poc = getFloatFromFormInput('obd1Poc');
+            const obd1Urok = getFloatFromFormInput('obd1Urok');
         
-            const obd2Poc = parseFloat(document.getElementById('obd2Poc').value) || 0;
-            const obd2Urok = parseFloat(document.getElementById('obd2Urok').value) || 0;
+            const obd2Poc = getFloatFromFormInput('obd2Poc');
+            const obd2Urok = getFloatFromFormInput('obd2Urok');
         
-            const obd3Poc = parseFloat(document.getElementById('obd3Poc').value) || 0;
-            const obd3Urok = parseFloat(document.getElementById('obd3Urok').value) || 0;
+            const obd3Poc = getFloatFromFormInput('obd3Poc');
+            const obd3Urok = getFloatFromFormInput('obd3Urok');
         
             const errorDiv = document.getElementById("error");
             const tableDiv = document.getElementById("table");
@@ -130,6 +130,10 @@
         function getDiscountFactor(mesacnyUrok, pocetMesiacovSplacania){
             // discount factor ({[(1+.005)^360] - 1} / [.005(1+.005)^360])
             return ((Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania) - 1) / (mesacnyUrok * Math.pow(1 + mesacnyUrok, pocetMesiacovSplacania)));
+        }
+
+        function getFloatFromFormInput(formInputId){
+            return parseFloat(document.getElementById(formInputId).value?.replace(/,/g, ".")) || 0;
         }
     </script>
 </body>
