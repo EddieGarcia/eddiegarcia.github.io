@@ -111,7 +111,7 @@
             for (let i = 1; i <= pocetMesiacovSplacania; i++) {
                 // Prepocitanie splatky 
                 if (i === obd1Poc * 12 + 1) {
-                    obd1result.innerHTML = `Splatka za obdobie 1: ${vyskaSplatky.toFixed(2)}, celkovy splateny urok na konci obdobia 1: ${zaplatenyUrok.toFixed(2)} (splatena istina celkovo ${})`;
+                    obd1result.innerHTML = `Splatka za obdobie 1: ${vyskaSplatky.toFixed(2)}, celkovy splateny urok na konci obdobia 1: ${zaplatenyUrok.toFixed(2)}`;
                     discountFactor = getDiscountFactor(mesacnyUrokObd2, pocetMesiacovObd2);
                     vyskaSplatky = vyskaNaZaciatkuMesiaca / discountFactor;
                     mesacnyUrok = mesacnyUrokObd2;
